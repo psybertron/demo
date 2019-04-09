@@ -19,20 +19,20 @@ export class AppComponent {
 
   getData(data) {
     const res = data.reduce((result, value) => {
-      result[value.gender.toLowerCase()] = result[value.gender.toLowerCase()]
+      result[value.gender] = result[value.gender]
       .concat((value.pets || [])
       .filter(pet => pet.type === 'Cat')
       .map(pet => pet.name));
       return result;
     },{
-      male: [],
-      female: []
+      Male: [],
+      Female: []
     });
     this.apiJson = res;
   }
 
   sortNames(data) {
-    data.male.sort();
-    data.female.sort();
+    data.Male.sort();
+    data.Female.sort();
   }
 }
