@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <div>
+            <h5>Male</h5>
+            <ul id="maleList"></ul>
+        </div>
+        <div>
+             <h5>Female</h5>
+             <ul id="femaleList"></ul>
+        </div>
+    </div>
+    <script>
+    var apiUrl = "http://agl-developer-test.azurewebsites.net/people.json";
+    var maleList = [];
+    var femaleList = [];
+    function getData(){
+        $.ajax({url: apiUrl, success: function(result){
+            for(var i=0;i<result.length;i++){
+                if(result[i].pets!=null){
+                    for(var j=0;j<result[i].pets.length;j++){
+                        if(result[i].pets[j].type=="Cat"){
+                            if(result[i].gender == "Male"){
+                               maleList.push(result[i].pets[j].name)
+                            }
+                            else{
+                               femaleList.push(result[i].pets[j].name);
+                            }
+                        }
+                    }
+                }
+            }
+            renderHtml(maleList.sort(),"maleList")
+            renderHtml(femaleList.sort(),"femaleList")
+          }});
+
+    }
+    function renderHtml(arrayList,htmlId){
+        $.each(arrayList, function(i)
+        {
+            return $('<li/>').text(arrayList[i]).appendTo($('#'+htmlId));    
+        });
+    }
+    getData();
+    </script>
+</body>
+</html>
